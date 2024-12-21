@@ -1,0 +1,71 @@
+{
+  "common": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search",
+    "submit": "Submit",
+    "update": "Update",
+    "actions": "Actions",
+    "view": "View",
+    "month": "Month",
+    "select": "Select...",
+    "workers": "workers",
+    "monthsPending": "months pending",
+    "selectAll": "Select All",
+    "clearAll": "Clear All"
+  },
+  "dashboard": {
+    "totalWorkers": "Total Workers",
+    "activeServices": "Active Services",
+    "totalIncome": "Total Income",
+    "overduePayments": "Overdue Payments",
+    "expiringDocuments": "Expiring Documents",
+    "overdueKafalat": "Overdue Kafalat Payments",
+    "iqama": "Iqama",
+    "license": "License",
+    "expiresOn": "Expires on: {{date}}",
+    "daysLeft": "days left",
+    "unpaidMonths": "{{count}} months unpaid"
+  },
+  "kafalat": {
+    "dashboard": "Kafalat Dashboard",
+    "totalCollected": "Total Collected",
+    "pendingAmount": "Pending Amount",
+    "workersUpToDate": "Workers Up to Date",
+    "workersOverdue": "Workers Overdue",
+    "paymentTrends": "Payment Trends",
+    "upcomingPayments": "Upcoming Payments",
+    "lastPayment": "Last Payment",
+    "neverPaid": "Never Paid",
+    "monthsOverdue": "{{count}} months overdue",
+    "noOverduePayments": "No overdue payments",
+    "lastYear": "Last 12 months",
+    "totalMonths": "Total Months",
+    "paidAmount": "Paid Amount",
+    "pendingPayments": "Pending Payments",
+    "pendingMonthsMessage": "{{count}} months pending payment",
+    "selectMonths": "Select Months",
+    "status": {
+      "upToDate": "Up to Date",
+      "pending": "Payment Pending",
+      "overdue": "Payment Overdue",
+      "paid": "All Paid"
+    }
+  },
+  "workers": {
+    "title": "Workers Management",
+    "name": "Name",
+    "nationality": "Nationality",
+    "workerId": "Worker ID",
+    "organization": "Organization",
+    "phoneNumber": "Phone Number",
+    "dateOfEntry": "Date of Entry",
+    "dateOfIssue": "Date of Issue",
+    "iqamaExpiryDate": "Iqama Expiry Date",
+    "kafalatPayments": "Kafalat Payments",
+    "kafalatStatus": "Kafalat Status"
+  }
+}

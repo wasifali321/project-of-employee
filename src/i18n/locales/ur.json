@@ -1,0 +1,93 @@
+{
+  "common": {
+    "add": "شامل کریں",
+    "edit": "ترمیم کریں",
+    "delete": "حذف کریں",
+    "save": "محفوظ کریں",
+    "cancel": "منسوخ کریں",
+    "search": "تلاش کریں",
+    "submit": "جمع کرائیں",
+    "update": "اپ ڈیٹ کریں",
+    "actions": "اقدامات"
+  },
+  "dashboard": {
+    "title": "ڈیش بورڈ",
+    "totalWorkers": "کل کارکنان",
+    "activeServices": "فعال خدمات",
+    "totalIncome": "کل آمدنی",
+    "overduePayments": "تاخیر شدہ ادائیگیاں"
+  },
+  "workers": {
+    "title": "کارکنان کا انتظام",
+    "addWorker": "کارکن شامل کریں",
+    "editWorker": "کارکن میں ترمیم کریں",
+    "name": "نام",
+    "nationality": "قومیت",
+    "workerId": "کارکن آئی ڈی",
+    "organization": "تنظیم",
+    "phoneNumber": "فون نمبر",
+    "dateOfIssue": "اجراء کی تاریخ",
+    "iqamaExpiryDate": "اقامہ کی میعاد ختم",
+    "dateOfEntry": "داخلے کی تاریخ",
+    "kafalatPayments": "کفالت کی ادائیگیاں"
+  },
+  "organizations": {
+    "title": "تنظیمیں",
+    "addOrganization": "تنظیم شامل کریں",
+    "editOrganization": "تنظیم میں ترمیم کریں",
+    "name": "تنظیم کا نام",
+    "commercialNumber": "تجارتی نمبر",
+    "unifiedNumber": "متحد نمبر",
+    "qiwaNumber": "قوہ نمبر",
+    "gosiNumber": "گوسی نمبر",
+    "openingDate": "کھلنے کی تاریخ",
+    "expiryDate": "میعاد ختم ہونے کی تاریخ"
+  },
+  "services": {
+    "title": "ویزا خدمات",
+    "addService": "خدمت شامل کریں",
+    "editService": "خدمت میں ترمیم کریں",
+    "customerName": "گاہک کا نام",
+    "passportNumber": "پاسپورٹ نمبر",
+    "mobileNumber": "موبائل نمبر",
+    "organization": "تنظیم",
+    "totalPrice": "کل قیمت",
+    "sellingPrice": "فروخت کی قیمت",
+    "remainingAmount": "باقی رقم",
+    "date": "تاریخ",
+    "receiptNumber": "رسید نمبر"
+  },
+  "users": {
+    "title": "صارفین کا انتظام",
+    "addUser": "صارف شامل کریں",
+    "editUser": "صارف میں ترمیم کریں",
+    "username": "صارف نام",
+    "email": "ای میل",
+    "role": "کردار",
+    "status": "حیثیت",
+    "lastLogin": "آخری لاگ ان",
+    "roles": {
+      "admin": "منتظم",
+      "manager": "مینیجر",
+      "user": "صارف"
+    }
+  },
+  "settings": {
+    "title": "ترتیبات",
+    "general": "عمومی ترتیبات",
+    "notifications": "اطلاعات کی ترتیبات",
+    "system": "سسٹم کی ترتیبات"
+  },
+  "confirmations": {
+    "deleteWorker": "کیا آپ واقعی اس کارکن کو حذف کرنا چاہتے ہیں؟",
+    "deleteOrganization": "کیا آپ واقعی اس تنظیم کو حذف کرنا چاہتے ہیں؟",
+    "deleteUser": "کیا آپ واقعی اس صارف کو حذف کرنا چاہتے ہیں؟"
+  },
+  "status": {
+    "active": "فعال",
+    "inactive": "غیر فعال",
+    "paid": "ادا شدہ",
+    "unpaid": "غیر ادا شدہ",
+    "partiallyPaid": "جزوی طور پر ادا شدہ"
+  }
+}

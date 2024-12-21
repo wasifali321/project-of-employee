@@ -1,0 +1,57 @@
+{
+  "common": {
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "submit": "إرسال",
+    "update": "تحديث",
+    "actions": "إجراءات"
+  },
+  "dashboard": {
+    "totalWorkers": "إجمالي العمال",
+    "activeServices": "الخدمات النشطة",
+    "totalIncome": "إجمالي الدخل",
+    "overduePayments": "المدفوعات المتأخرة"
+  },
+  "workers": {
+    "name": "الاسم",
+    "nationality": "الجنسية",
+    "workerId": "رقم العامل",
+    "organization": "المنظمة",
+    "phoneNumber": "رقم الهاتف",
+    "dateOfIssue": "تاريخ الإصدار",
+    "iqamaExpiryDate": "تاريخ انتهاء الإقامة",
+    "dateOfEntry": "تاريخ الدخول",
+    "kafalatPayments": "مدفوعات الكفالة"
+  },
+  "organizations": {
+    "name": "اسم المنظمة",
+    "commercialNumber": "الرقم التجاري",
+    "unifiedNumber": "الرقم الموحد",
+    "qiwaNumber": "رقم قوى",
+    "gosiNumber": "رقم التأمينات",
+    "openingDate": "تاريخ الافتتاح",
+    "expiryDate": "تاريخ الانتهاء"
+  },
+  "services": {
+    "customerName": "اسم العميل",
+    "passportNumber": "رقم الجواز",
+    "mobileNumber": "رقم الجوال",
+    "organization": "المنظمة",
+    "totalPrice": "السعر الإجمالي",
+    "sellingPrice": "سعر البيع",
+    "remainingAmount": "المبلغ المتبقي",
+    "date": "التاريخ",
+    "receiptNumber": "رقم الإيصال"
+  },
+  "settings": {
+    "general": "عام",
+    "notifications": "الإشعارات",
+    "security": "الأمان",
+    "system": "النظام",
+    "history": "السجل"
+  }
+}
