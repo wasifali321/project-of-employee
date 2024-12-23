@@ -7,8 +7,8 @@ interface LoginCredentials {
 
 const rolePermissions: Record<IRole, string[]> = {
   admin: ['*'],
-  manager: ['read.*', 'write.transactions', 'write.workers'],
-  user: ['read.transactions', 'read.workers']
+  manager: ['read.*', 'write.transactions', 'write.workers', 'write.visas'],
+  user: ['read.transactions', 'read.workers', 'read.visas']
 };
 
 export const authService = {

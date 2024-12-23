@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Save, Building2, Bell, Shield, Database, Globe } from 'lucide-react';
 import type { Settings } from '../../types';
 import { LogoUpload } from './LogoUpload';
+import { BackupManager } from './BackupManager';
 
 export function SettingsPanel() {
   const [settings, setSettings] = useState<Settings>({
@@ -240,6 +241,9 @@ export function SettingsPanel() {
           </div>
         </div>
       </div>
+
+      {/* Add Backup Manager */}
+      <BackupManager />
     </div>
   );
 } 

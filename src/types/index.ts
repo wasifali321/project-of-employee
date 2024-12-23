@@ -133,13 +133,28 @@ export interface Settings {
 export interface Visa {
   id: string;
   visaNumber: string;
+  borderNumber: string;
+  quantity: number;
+  nationality: string;
   profession: string;
-  workerId?: string;
-  type: string;
-  number: string;
-  issueDate: string;
+  organizationId: string;
+  agencyName: string;
+  status: 'available' | 'reserved' | 'used';
+  type: 'new' | 'transfer' | 'renewal';
+  unifiedNumber?: string;
+  crNumber?: string;
+  price: number;
+  purchaseDate: string;
   expiryDate: string;
-  status: 'available' | 'active' | 'expired' | 'pending';
+  notes?: string;
+  assignedTo?: string;
+  documents?: VisaDocument[];
+}
+
+export interface VisaDocument {
+  name: string;
+  url: string;
+  uploadDate: string;
 }
 
 export interface VisaInventory {

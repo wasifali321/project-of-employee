@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
-import type { Worker } from '../../types';
+import type { Worker, Organization } from '../../types';
 import { format } from 'date-fns';
+import { storageService } from '../../services/storage';
 
 interface WorkerViewProps {
   worker: Worker;
@@ -9,6 +10,16 @@ interface WorkerViewProps {
 }
 
 export function WorkerView({ worker, onClose }: WorkerViewProps) {
+  const [organizationDetails, setOrganizationDetails] = useState<Organization | null>(null);
+
+  useEffect(() => {
+    const { data: organizations } = storageService.loadOrganizations();
+    const org = organizations.find(o => o.name === worker.organization);
+    if (org) {
+      setOrganizationDetails(org);
+    }
+  }, [worker.organization]);
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-6">
@@ -46,7 +57,9 @@ export function WorkerView({ worker, onClose }: WorkerViewProps) {
           <div className="mt-2 space-y-4">
             <div>
               <label className="block text-sm text-gray-700">Organization</label>
-              <p className="mt-1 text-sm font-medium text-gray-900">{worker.organization}</p>
+              <p className="mt-1 text-sm font-medium text-gray-900">
+                {organizationDetails ? `${organizationDetails.name} - ${organizationDetails.unifiedNumber}` : worker.organization}
+              </p>
             </div>
             <div>
               <label className="block text-sm text-gray-700">Date of Issue</label>

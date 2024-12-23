@@ -1,15 +1,25 @@
-import type { Worker, Organization, Service } from '../types';
+import type { Worker, Organization, FinancialTransaction, Visa } from '../types';
 
 class StorageService {
   private readonly PAGE_SIZE = 10;
 
   private getItem<T>(key: string): T[] {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error(`Error loading ${key}:`, error);
+      return [];
+    }
   }
 
   private setItem<T>(key: string, data: T[]): void {
-    localStorage.setItem(key, JSON.stringify(data));
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.error(`Error saving ${key}:`, error);
+      throw new Error(`Failed to save ${key}`);
+    }
   }
 
   // Workers with pagination
@@ -141,6 +151,57 @@ class StorageService {
     // Force a refresh of the data
     const event = new CustomEvent('storage-updated');
     window.dispatchEvent(event);
+  }
+
+  loadTransactions(): { data: FinancialTransaction[]; total: number; pages: number } {
+    const transactions = this.getItem<FinancialTransaction>('transactions');
+    return {
+      data: transactions,
+      total: transactions.length,
+      pages: Math.ceil(transactions.length / this.PAGE_SIZE)
+    };
+  }
+
+  saveTransaction(transaction: FinancialTransaction): FinancialTransaction {
+    const transactions = this.getItem<FinancialTransaction>('transactions');
+    transactions.push(transaction);
+    this.setItem('transactions', transactions);
+    return transaction;
+  }
+
+  loadVisas(page = 1): { data: Visa[]; total: number; pages: number } {
+    const visas = this.getItem<Visa>('visas');
+    const start = (page - 1) * this.PAGE_SIZE;
+    const end = start + this.PAGE_SIZE;
+    
+    return {
+      data: visas.slice(start, end),
+      total: visas.length,
+      pages: Math.ceil(visas.length / this.PAGE_SIZE)
+    };
+  }
+
+  saveVisa(visa: Visa): Visa {
+    const visas = this.getItem<Visa>('visas');
+    visas.push(visa);
+    this.setItem('visas', visas);
+    return visa;
+  }
+
+  updateVisa(visa: Visa): Visa {
+    const visas = this.getItem<Visa>('visas');
+    const index = visas.findIndex(v => v.id === visa.id);
+    if (index !== -1) {
+      visas[index] = visa;
+      this.setItem('visas', visas);
+    }
+    return visa;
+  }
+
+  deleteVisa(visaId: string): void {
+    const visas = this.getItem<Visa>('visas');
+    const filteredVisas = visas.filter(v => v.id !== visaId);
+    this.setItem('visas', filteredVisas);
   }
 }
 

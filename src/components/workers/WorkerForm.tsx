@@ -92,9 +92,9 @@ export function WorkerForm({ onSubmit, onCancel, initialData }: WorkerFormProps)
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="">Select Organization</option>
-            {organizations.map(org => (
+            {organizations.map((org) => (
               <option key={org.id} value={org.name}>
-                {org.name}
+                {org.name} - {org.unifiedNumber}
               </option>
             ))}
           </select>

@@ -3,26 +3,13 @@ import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { LoginForm } from '../components/auth/LoginForm';
 import { DashboardLayout } from '../components/layouts/DashboardLayout';
 import { DashboardPanel } from '../components/dashboard/DashboardPanel';
+import { WorkersPanel } from '../components/workers/WorkersPanel';
+import { VisaPanel } from '../components/visa/VisaPanel';
 import { FinancialPanel } from '../components/financial/FinancialPanel';
-import { WorkerList } from '../components/workers/WorkerList';
-import { VisaServicePanel } from '../components/visa/VisaServicePanel';
 import { SettingsPanel } from '../components/settings/SettingsPanel';
 import { UnauthorizedPage } from '../components/auth/UnauthorizedPage';
-import { storageService } from '../services/storage';
 
 export function AppRoutes() {
-  const workers = storageService.loadWorkers();
-  const services = storageService.loadServices();
-  const organizations = storageService.loadOrganizations();
-
-  const handleWorkerUpdate = (worker: Worker) => {
-    // Implement worker update logic
-  };
-
-  const handleWorkerDelete = (id: string) => {
-    // Implement worker delete logic
-  };
-
   return (
     <Routes>
       <Route path="/login" element={<LoginForm />} />
@@ -35,39 +22,10 @@ export function AppRoutes() {
       }>
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPanel />} />
-        
-        <Route path="financial" element={
-          <ProtectedRoute requiredPermission="read.financial">
-            <FinancialPanel />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="workers" element={
-          <ProtectedRoute requiredPermission="read.workers">
-            <WorkerList
-              workers={workers}
-              onEdit={handleWorkerUpdate}
-              onDelete={handleWorkerDelete}
-              onUpdateWorker={handleWorkerUpdate}
-              onSearch={(term, filters) => {/* Implement search */}}
-            />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="visas" element={
-          <ProtectedRoute requiredPermission="read.visas">
-            <VisaServicePanel
-              services={services}
-              organizations={organizations}
-            />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="settings" element={
-          <ProtectedRoute requiredPermission="read.settings">
-            <SettingsPanel />
-          </ProtectedRoute>
-        } />
+        <Route path="workers" element={<WorkersPanel />} />
+        <Route path="visas" element={<VisaPanel />} />
+        <Route path="financial" element={<FinancialPanel />} />
+        <Route path="settings" element={<SettingsPanel />} />
       </Route>
       
       <Route path="*" element={<Navigate to="/" replace />} />

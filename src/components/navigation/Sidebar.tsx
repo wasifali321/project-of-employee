@@ -5,136 +5,139 @@ import {
   Building2, 
   FileText, 
   DollarSign,
-  Stamp,
   Settings,
   Upload,
-  AlertTriangle
+  AlertTriangle,
+  Briefcase
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-export function Sidebar() {
+export function Sidebar({ logo }: { logo: string }) {
+  const { t } = useTranslation();
   const location = useLocation();
 
   const navigation = [
     {
-      name: 'Dashboard',
+      name: t('navigation.dashboard'),
       href: '/dashboard',
       icon: LayoutDashboard
     },
     {
-      type: 'section',
-      name: 'Workers Management',
-      items: [
+      name: t('navigation.visaInventory'),
+      href: '/visas',
+      icon: Briefcase
+    },
+    {
+      name: t('navigation.workers'),
+      href: '/workers',
+      icon: Users,
+      subItems: [
         {
-          name: 'Workers List',
-          href: '/workers',
-          icon: Users
-        },
-        {
-          name: 'Bulk Entry',
+          name: t('workers.bulkUpload'),
           href: '/workers/bulk',
           icon: Upload
         }
       ]
     },
     {
-      type: 'section',
-      name: 'Organizations',
-      items: [
-        {
-          name: 'Organizations',
-          href: '/organizations',
-          icon: Building2
-        }
-      ]
+      name: t('navigation.organizations'),
+      href: '/organizations',
+      icon: Building2
     },
     {
-      type: 'section',
-      name: 'Monitoring',
-      items: [
-        {
-          name: 'Violations',
-          href: '/violations',
-          icon: AlertTriangle
-        }
-      ]
-    },
-    {
-      name: 'Financial',
+      name: t('navigation.financial'),
       href: '/financial',
       icon: DollarSign
-    },
-    {
-      name: 'Settings',
-      href: '/settings',
-      icon: Settings
     }
   ];
 
-  const renderNavItem = (item: any) => {
-    const isActive = location.pathname === item.href;
-    const Icon = item.icon;
-
-    return (
-      <Link
-        key={item.href}
-        to={item.href}
-        className={`
-          group flex items-center px-4 py-3 text-sm font-medium rounded-lg
-          transition-all duration-200 ease-in-out
-          ${isActive
-            ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 shadow-sm'
-            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
-        `}
-      >
-        <Icon
-          className={`
-            mr-3 h-5 w-5 transition-colors duration-200
-            ${isActive
-              ? 'text-blue-600'
-              : 'text-gray-400 group-hover:text-gray-600'}
-          `}
-        />
-        {item.name}
-      </Link>
-    );
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-full">
-      <div className="flex flex-col h-full">
-        <div className="p-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">
-            Worker Management
-          </h2>
+    <div className="w-56 bg-white border-r border-gray-200 flex flex-col h-full">
+      {/* Logo Section */}
+      <div className="p-4 border-b border-gray-200">
+        {logo ? (
+          <img src={logo} alt="Logo" className="h-8 w-auto mx-auto" />
+        ) : (
+          <div className="h-8 flex items-center justify-center text-lg font-semibold text-gray-800">
+            {t('company.name')}
+          </div>
+        )}
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-2 px-2">
+        <div className="space-y-1">
+          {navigation.map((item) => (
+            <div key={item.name}>
+              <Link
+                to={item.href}
+                className={`
+                  group flex items-center px-3 py-2 text-sm font-medium rounded-md
+                  transition-colors duration-150 ease-in-out
+                  ${isActive(item.href)
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
+                `}
+              >
+                <item.icon
+                  className={`mr-3 h-4 w-4 flex-shrink-0 transition-colors duration-150
+                    ${isActive(item.href) ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500'}
+                  `}
+                />
+                <span className="truncate">{item.name}</span>
+              </Link>
+
+              {/* Sub Items */}
+              {item.subItems && (
+                <div className="ml-8 mt-1 space-y-1">
+                  {item.subItems.map((subItem) => (
+                    <Link
+                      key={subItem.name}
+                      to={subItem.href}
+                      className={`
+                        group flex items-center px-3 py-1.5 text-sm font-medium rounded-md
+                        transition-colors duration-150 ease-in-out
+                        ${isActive(subItem.href)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}
+                      `}
+                    >
+                      <subItem.icon
+                        className={`mr-3 h-3 w-3 flex-shrink-0 transition-colors duration-150
+                          ${isActive(subItem.href) ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500'}
+                        `}
+                      />
+                      <span className="truncate">{subItem.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-        <div className="flex-1 py-6 px-3 overflow-y-auto">
-          <nav className="space-y-8">
-            {navigation.map((item, index) => {
-              if (item.type === 'section') {
-                return (
-                  <div key={index} className="space-y-2">
-                    <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      {item.name}
-                    </p>
-                    <div className="space-y-1">
-                      {item.items.map(subItem => renderNavItem(subItem))}
-                    </div>
-                  </div>
-                );
-              }
-              return renderNavItem(item);
-            })}
-          </nav>
-        </div>
-        <div className="p-4 border-t border-gray-200">
-          <Link
-            to="/settings"
-            className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900"
-          >
-            <Settings className="h-5 w-5 mr-3 text-gray-400" />
-            Settings
-          </Link>
-        </div>
+      </nav>
+
+      {/* Settings Link */}
+      <div className="p-2 border-t border-gray-200">
+        <Link
+          to="/settings"
+          className={`
+            flex items-center px-3 py-2 text-sm font-medium rounded-md
+            transition-colors duration-150 ease-in-out
+            ${isActive('/settings')
+              ? 'bg-blue-50 text-blue-600'
+              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
+          `}
+        >
+          <Settings
+            className={`mr-3 h-4 w-4 flex-shrink-0 transition-colors duration-150
+              ${isActive('/settings') ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500'}
+            `}
+          />
+          {t('navigation.settings')}
+        </Link>
       </div>
     </div>
   );
