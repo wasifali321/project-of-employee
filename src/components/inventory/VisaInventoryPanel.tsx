@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FileText, Plus, Filter } from 'lucide-react';
 import { VisaForm } from './VisaForm';
@@ -127,3 +127,4 @@ export function VisaInventoryPanel({
     </div>
   );
 }
+*/

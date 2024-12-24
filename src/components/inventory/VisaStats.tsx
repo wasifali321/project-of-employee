@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { FileText, Clock, CheckCircle, XCircle } from 'lucide-react';
 import type { VisaInventory } from '../../types';
 
@@ -59,3 +59,4 @@ export function VisaStats({ stats }: VisaStatsProps) {
     </div>
   );
 }
+*/

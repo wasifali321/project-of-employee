@@ -1,34 +1,28 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { ProtectedRoute } from '../components/auth/ProtectedRoute';
-import { LoginForm } from '../components/auth/LoginForm';
+import { Routes, Route } from 'react-router-dom';
 import { DashboardLayout } from '../components/layouts/DashboardLayout';
-import { DashboardPanel } from '../components/dashboard/DashboardPanel';
-import { WorkersPanel } from '../components/workers/WorkersPanel';
-import { VisaPanel } from '../components/visa/VisaPanel';
+import { Dashboard } from '../components/dashboard/Dashboard';
+import { WorkerPanel } from '../components/workers/WorkerPanel';
+import { VisaInventoryPanel } from '../components/visa/VisaInventoryPanel';
+import { OrganizationPanel } from '../components/organization/OrganizationPanel';
 import { FinancialPanel } from '../components/financial/FinancialPanel';
 import { SettingsPanel } from '../components/settings/SettingsPanel';
-import { UnauthorizedPage } from '../components/auth/UnauthorizedPage';
+import { ViolationPanel } from '../components/violations/ViolationPanel';
+import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 
 export function AppRoutes() {
+  console.log('Rendering AppRoutes'); // Debug log
+  
   return (
     <Routes>
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/unauthorized" element={<UnauthorizedPage />} />
-      
-      <Route path="/" element={
-        <ProtectedRoute>
-          <DashboardLayout />
-        </ProtectedRoute>
-      }>
-        <Route index element={<Navigate to="/dashboard" replace />} />
-        <Route path="dashboard" element={<DashboardPanel />} />
-        <Route path="workers" element={<WorkersPanel />} />
-        <Route path="visas" element={<VisaPanel />} />
-        <Route path="financial" element={<FinancialPanel />} />
+      <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+        <Route index element={<Dashboard />} />
+        <Route path="workers/*" element={<WorkerPanel />} />
+        <Route path="visa-inventory/*" element={<VisaInventoryPanel />} />
+        <Route path="organizations/*" element={<OrganizationPanel />} />
+        <Route path="financial/*" element={<FinancialPanel />} />
         <Route path="settings" element={<SettingsPanel />} />
+        <Route path="violations" element={<ViolationPanel />} />
       </Route>
-      
-      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 } 

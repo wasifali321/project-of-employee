@@ -1,129 +1,135 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Calendar, DollarSign } from 'lucide-react';
-import type { Worker, Organization } from '../../types/index';
-import { differenceInDays, differenceInMonths } from 'date-fns';
-import { formatCurrency } from '../../utils/formatters';
+import { format } from 'date-fns';
+import { AlertTriangle, Building2, Calendar, X } from 'lucide-react';
+import type { Worker, Organization } from '../../types';
+import { OrganizationView } from '../organization/OrganizationView';
 
 interface DashboardAlertsProps {
   workers: Worker[];
   organizations: Organization[];
 }
 
-export function DashboardAlerts({ workers = [], organizations = [] }: DashboardAlertsProps) {
+export function DashboardAlerts({ workers, organizations }: DashboardAlertsProps) {
   const { t } = useTranslation();
-  const currentDate = new Date();
+  const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
 
-  // Get expiring documents (iqama and organization licenses)
-  const expiringDocuments = [
-    ...workers
-      .filter(worker => worker.iqamaExpiryDate)
-      .map(worker => ({
-        type: 'iqama',
-        name: worker.name,
-        expiryDate: worker.iqamaExpiryDate ? new Date(worker.iqamaExpiryDate) : null,
-        daysLeft: worker.iqamaExpiryDate ? differenceInDays(new Date(worker.iqamaExpiryDate), currentDate) : 0
-      })),
-    ...organizations
-      .filter(org => org.expiryDate)
-      .map(org => ({
-        type: 'license',
-        name: org.name,
-        expiryDate: new Date(org.expiryDate),
-        daysLeft: differenceInDays(new Date(org.expiryDate), currentDate)
-      }))
-  ]
-    .filter(doc => doc.daysLeft >= 0 && doc.daysLeft <= 30)
-    .sort((a, b) => a.daysLeft - b.daysLeft);
-
-  // Get workers with overdue kafalat payments (3 or more months)
-  const overdueKafalat = workers.filter(worker => {
-    if (!worker.dateOfEntry) return false;
-    const startDate = new Date(worker.dateOfEntry);
-    const totalMonths = differenceInMonths(currentDate, startDate) + 1;
-    const paidMonths = worker.kafalatPayments?.length || 0;
-    return (totalMonths - paidMonths) >= 3;
+  const expiringIqamas = workers.filter(worker => {
+    const daysToExpiry = Math.ceil(
+      (new Date(worker.iqamaExpiry).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
+    );
+    return daysToExpiry <= 30 && daysToExpiry > 0;
   });
 
-  if (expiringDocuments.length === 0 && overdueKafalat.length === 0) {
-    return null;
-  }
+  const expiringOrgs = organizations.filter(org => {
+    const daysToExpiry = Math.ceil(
+      (new Date(org.expiryDate).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
+    );
+    return daysToExpiry <= 30 && daysToExpiry > 0;
+  });
+
+  const handleOrgClick = (org: Organization) => {
+    setSelectedOrg(org);
+  };
 
   return (
     <div className="space-y-6">
-      {expiringDocuments.length > 0 && (
-        <div className="bg-yellow-50 rounded-lg p-6">
-          <div className="flex items-center mb-4">
-            <Calendar className="h-6 w-6 text-yellow-600" />
-            <h3 className="ml-2 text-lg font-medium text-yellow-800">
-              {t('dashboard.expiringDocuments')}
-            </h3>
-          </div>
-          <div className="space-y-3">
-            {expiringDocuments.map((doc, index) => (
+      {/* Organizations Section */}
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">
+          {t('dashboard.expiringOrganizations')}
+        </h3>
+        <div className="bg-white rounded-lg shadow divide-y divide-gray-200">
+          {expiringOrgs.length === 0 ? (
+            <p className="p-4 text-gray-500 text-center">{t('dashboard.noExpiringOrganizations')}</p>
+          ) : (
+            expiringOrgs.map(org => (
               <div
-                key={`${doc.type}-${index}`}
-                className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm"
+                key={org.id}
+                className="p-4 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleOrgClick(org)}
               >
-                <div>
-                  <p className="font-medium text-gray-900">
-                    {doc.name} ({t(`dashboard.${doc.type}`)})
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {t('dashboard.expiresOn', {
-                      date: doc.expiryDate?.toLocaleDateString() || t('common.unknown')
-                    })}
-                  </p>
-                </div>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    doc.daysLeft <= 7
-                      ? 'bg-red-100 text-red-800'
-                      : doc.daysLeft <= 15
-                      ? 'bg-orange-100 text-orange-800'
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}
-                >
-                  {doc.daysLeft} {t('dashboard.daysLeft')}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {overdueKafalat.length > 0 && (
-        <div className="bg-red-50 rounded-lg p-6">
-          <div className="flex items-center mb-4">
-            <DollarSign className="h-6 w-6 text-red-600" />
-            <h3 className="ml-2 text-lg font-medium text-red-800">
-              {t('dashboard.overdueKafalat')}
-            </h3>
-          </div>
-          <div className="space-y-3">
-            {overdueKafalat.map((worker) => {
-              const startDate = new Date(worker.dateOfEntry);
-              const totalMonths = differenceInMonths(currentDate, startDate) + 1;
-              const paidMonths = worker.kafalatPayments?.length || 0;
-              const unpaidMonths = totalMonths - paidMonths;
-              const monthlyAmount = worker.kafalatAmount || 0;
-
-              return (
-                <div
-                  key={worker.id}
-                  className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm"
-                >
-                  <div>
-                    <p className="font-medium text-gray-900">{worker.name}</p>
-                    <p className="text-sm text-gray-500">
-                      {t('dashboard.unpaidMonths', { count: unpaidMonths })}
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <Building2 className="h-5 w-5 text-yellow-400" />
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {org.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {t('organizations.crNumber')}: {org.commercialNumber}
+                        </p>
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        {format(new Date(org.expiryDate), 'dd/MM/yyyy')}
+                      </p>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {t('dashboard.expiresIn', {
+                        days: Math.ceil(
+                          (new Date(org.expiryDate).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
+                        )
+                      })}
                     </p>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                    {formatCurrency(unpaidMonths * monthlyAmount)}
-                  </span>
                 </div>
-              );
-            })}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Workers Section */}
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">
+          {t('dashboard.expiringDocuments')}
+        </h3>
+        <div className="bg-white rounded-lg shadow divide-y divide-gray-200">
+          {expiringIqamas.length === 0 ? (
+            <p className="p-4 text-gray-500 text-center">{t('dashboard.noExpiringDocuments')}</p>
+          ) : (
+            expiringIqamas.map(worker => (
+              <div key={worker.id} className="p-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-gray-900">{worker.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {format(new Date(worker.iqamaExpiry), 'dd/MM/yyyy')}
+                      </p>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {t('dashboard.iqamaExpiresIn', {
+                        days: Math.ceil(
+                          (new Date(worker.iqamaExpiry).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
+                        )
+                      })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Organization Details Modal */}
+      {selectedOrg && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4 z-50">
+          <div className="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setSelectedOrg(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-500"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <OrganizationView organization={selectedOrg} onClose={() => setSelectedOrg(null)} />
           </div>
         </div>
       )}

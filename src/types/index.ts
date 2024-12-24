@@ -20,29 +20,29 @@ export interface KafalatPayment {
 export interface Worker {
   id: string;
   name: string;
-  workerId: string;
-  nationality: string;
-  organization: string;
-  phoneNumber: string;
-  dateOfIssue: string;
-  iqamaExpiryDate: string;
+  workerId?: string;
+  nationality?: string;
+  organization?: string;
+  phoneNumber?: string;
+  dateOfIssue?: string;
+  iqamaExpiryDate?: string;
   insuranceExpiryDate?: string;
-  dateOfEntry: string;
-  kafalatAmount: number;
-  kafalatStartDate: string;
-  kafalatPayments: KafalatPayment[];
+  kafalatAmount?: number;
+  kafalatStartDate?: string;
+  kafalatPayments?: any[];
+  dateOfEntry?: string;
 }
 
 export interface Organization {
   id: string;
   name: string;
-  commercialNumber: string;
-  unifiedNumber: string;
-  qiwaNumber: string;
-  gosiNumber: string;
-  openingDate: string;
-  expiryDate: string;
-  workerCount?: number;
+  address: string;
+  phone: string;
+  email: string;
+  contactPerson: string;
+  crNumber: string;
+  vatNumber: string;
+  status: 'active' | 'inactive';
 }
 
 export interface VisaService {
@@ -99,56 +99,29 @@ export interface HistoryEntry {
 }
 
 export interface Settings {
-  general: {
-    companyName: string;
-    companyLogo: string;
-    defaultLanguage: string;
-    timeZone: string;
-    dateFormat: string;
-    currency: string;
-  };
-  notifications: {
-    emailNotifications: boolean;
-    documentExpiryAlert: boolean;
-    kafalaDueAlert: boolean;
-    alertDays: number;
-    emailRecipients: string;
-  };
-  security: {
-    requireTwoFactor: boolean;
-    passwordExpiry: number;
-    sessionTimeout: number;
-    allowedIPs: string[];
-    loginAttempts: number;
-  };
-  system: {
-    dataRetentionPeriod: number;
-    backupFrequency: string;
-    maxFileSize: number;
-    allowedFileTypes: string;
-    enableAuditLog: boolean;
-  };
+  companyName: string;
+  companyLogo: string;
+  language: string;
+  currency: string;
+  dateFormat: string;
+  theme: string;
 }
 
 export interface Visa {
   id: string;
   visaNumber: string;
   borderNumber: string;
-  quantity: number;
-  nationality: string;
   profession: string;
-  organizationId: string;
-  agencyName: string;
+  nationality: string;
   status: 'available' | 'reserved' | 'used';
   type: 'new' | 'transfer' | 'renewal';
-  unifiedNumber?: string;
-  crNumber?: string;
+  gender: 'male' | 'female';
   price: number;
   purchaseDate: string;
   expiryDate: string;
   notes?: string;
-  assignedTo?: string;
-  documents?: VisaDocument[];
+  dateCreated: string;
+  dateModified?: string;
 }
 
 export interface VisaDocument {
@@ -169,17 +142,13 @@ export type PaymentCategory = 'salary' | 'visa' | 'iqama' | 'insurance' | 'other
 
 export interface FinancialTransaction {
   id: string;
-  amount: number;
-  type: 'income' | 'expense' | 'refund';
-  status: 'pending' | 'completed' | 'cancelled';
   date: string;
+  type: 'income' | 'expense' | 'refund';
+  amount: number;
   description: string;
-  category: PaymentCategory;
-  reference?: string;
-  paymentMethod: 'cash' | 'bank' | 'card';
-  source: PaymentSource;
-  workerId?: string;
-  visaId?: string;
+  category: string;
+  paymentMethod: string;
+  source: string;
 }
 
 export interface FinancialSummary {

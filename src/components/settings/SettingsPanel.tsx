@@ -3,6 +3,7 @@ import { Save, Building2, Bell, Shield, Database, Globe } from 'lucide-react';
 import type { Settings } from '../../types';
 import { LogoUpload } from './LogoUpload';
 import { BackupManager } from './BackupManager';
+import { HistoryPanel } from './HistoryPanel';
 
 export function SettingsPanel() {
   const [settings, setSettings] = useState<Settings>({
@@ -244,6 +245,8 @@ export function SettingsPanel() {
 
       {/* Add Backup Manager */}
       <BackupManager />
+
+      <HistoryPanel />
     </div>
   );
 } 

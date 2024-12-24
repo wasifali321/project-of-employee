@@ -32,7 +32,11 @@
     "license": "License",
     "expiresOn": "Expires on: {{date}}",
     "daysLeft": "days left",
-    "unpaidMonths": "{{count}} months unpaid"
+    "unpaidMonths": "{{count}} months unpaid",
+    "expiringOrganizations": "Expiring Organizations",
+    "noExpiringOrganizations": "No organizations expiring soon",
+    "expiresIn": "Expires in {{days}} days",
+    "iqamaExpiresIn": "Iqama expires in {{days}} days"
   },
   "kafalat": {
     "dashboard": "Kafalat Dashboard",
@@ -91,21 +95,19 @@
   },
   "visa": {
     "inventory": "Visa Inventory",
-    "addVisa": "Add Visa",
+    "addVisa": "Add New Visa",
     "editVisa": "Edit Visa",
     "visaNumber": "Visa Number",
+    "borderNumber": "Border Number",
     "profession": "Profession",
+    "nationality": "Nationality",
     "status": "Status",
     "type": "Type",
-    "nationality": "Nationality",
     "gender": "Gender",
     "price": "Price",
     "purchaseDate": "Purchase Date",
     "expiryDate": "Expiry Date",
-    "supplier": "Supplier",
     "notes": "Notes",
-    "documents": "Documents",
-    "uploadDocuments": "Upload Documents",
     "available": "Available",
     "reserved": "Reserved",
     "used": "Used",
@@ -114,16 +116,7 @@
     "renewal": "Renewal",
     "male": "Male",
     "female": "Female",
-    "deleteConfirm": "Are you sure you want to delete this visa?",
-    "assignToWorker": "Assign to Worker",
-    "visaDetails": "Visa Details",
-    "totalVisas": "Total Visas",
-    "borderNumber": "Border Number",
-    "organization": "Organization",
-    "quantity": "Quantity",
-    "agency": "Agency",
-    "unifiedNumber": "Unified Number",
-    "crNumber": "CR Number"
+    "searchPlaceholder": "Search visas..."
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -131,6 +124,18 @@
     "visaInventory": "Visa Inventory",
     "organizations": "Organizations",
     "financial": "Financial",
-    "settings": "Settings"
+    "settings": "Settings",
+    "violations": "Violations & Alerts"
+  },
+  "violations": {
+    "title": "Violations & Alerts",
+    "iqamaViolations": "Iqama Violations",
+    "kafalatViolations": "Kafalat Violations",
+    "noViolations": "No violations found",
+    "expiringSoon": "Expiring Soon",
+    "paymentDue": "Payment Due"
+  },
+  "organizations": {
+    "crNumber": "CR Number"
   }
 }

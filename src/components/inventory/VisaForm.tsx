@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Visa, Organization } from '../../types';
 
@@ -162,3 +162,4 @@ export function VisaForm({ onSubmit, initialData, organizations }: VisaFormProps
     </form>
   );
 }
+*/

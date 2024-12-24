@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { Edit2, Trash2 } from 'lucide-react';
 import type { Visa, Organization } from '../../types';
 import { format } from 'date-fns';
@@ -104,3 +104,4 @@ export function VisaList({ visas, organizations, onEdit, onDelete }: VisaListPro
     </div>
   );
 }
+*/

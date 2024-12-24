@@ -48,10 +48,15 @@ export function Sidebar({ logo }: { logo: string }) {
       name: t('navigation.financial'),
       href: '/financial',
       icon: DollarSign
+    },
+    {
+      name: t('navigation.violations'),
+      href: '/violations',
+      icon: AlertTriangle
     }
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => location.pathname.startsWith(path);
 
   return (
     <div className="w-56 bg-white border-r border-gray-200 flex flex-col h-full">
